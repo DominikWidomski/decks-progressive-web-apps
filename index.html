@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Progressive Web Apps</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="/libs/reveal.js/css/reveal.css">
+		<link rel="stylesheet" href="/libs/reveal.js/css/theme/night.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="/libs/reveal.js/lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'libs/reveal.js/css/print/pdf.css' : 'libs/reveal.js/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+
+			function changeTheme(name) {
+				document.getElementById('theme').setAttribute('href','/libs/reveal.js/css/theme/'+name+'.css'); return false;
+			}
+
+			window.addEventListener('change-style-one', function() {
+				changeTheme('night');
+			})
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+
+		<style>
+			* {
+				box-sizing: border-box;
+			}
+
+			ul {
+				width: 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+
+				<section>
+					<h1>Progressive Web Apps</h1>
+					<h3>9&middot;6&middot;16</h3>
+					<p>
+						<small>Dom @ DD</small>
+					</p>
+				</section>
+
+
+				<section>
+					<section>
+						<h1>What makes an app?</h1>
+					</section>
+
+					<section>
+						<h1>Appiness!</h1>
+
+						<ul>
+							<li>Responsive</li>
+							<li>Offline
+								<ul>
+									<li>Persistant</li>
+									<li>Network Resiliant</li>
+									<li>... Manages sync, user doesn't have to wait for network (relates to prev. pt.)</li>
+								</ul>
+							</li>
+							<li>Render what you have, most achievable content, progressively enhance content</li>
+							<li>Notifications, integration with mobile</li>
+							<li>Appy Behaviour</li>
+							<li>Animated, Juicy, Responsive (Material)</li>
+						</ul>
+					</section>
+				</section>
+
+
+				<section>
+					<h1>What are PWAs?</h1>
+
+					<p><q><i>here goes some definition of what Google thinks PWAs are, how they think about it</i></q></p>
+				</section>
+
+
+				<section>
+					<h1>RAIL</h1>
+					<aside class="notes">
+						RAIL is a performance model.
+					</aside>
+
+					<ul>
+						<li class="fragment">Response <b>100ms</b></li>
+						<li class="fragment">Animation <b>16ms</b></li>
+						<li class="fragment">Idle <b>Maximise idle time</b></li>
+						<li class="fragment">Load <b>1000ms</b></li>
+					</ul>
+
+					<p><i>paste in TL;DR from google developers page</i></p>
+				</section>
+
+
+				<section data-background="#A53F2B">
+					<section>
+						<h1>Homescreen!</h1>
+					</section>
+
+					<section>
+						<ul>
+							<li class="fragment">Icon on homescreen</li>
+							<li class="fragment">Splash Screen</li>
+							<li class="fragment">Integrated with device</li>
+							<li class="fragment">Manifest file in JSON</li>
+						</ul>
+
+						<aside class="notes">
+							<p>
+								Manifest much like Android / Java development
+							</p>
+						</aside>
+					</section>
+
+					<section>
+						<h1>Manifest</h1>
+
+						<code>
+							...
+							snippets of code from the manifest that are relevant to the homescreen
+							...
+							icons!
+							...
+							splash screen
+							...
+							how it presents itself? standalone etc?
+							...
+						</code>
+
+						<aside class="notes">
+							<p>
+								First level citizen in the apps carousel if you choose so, which is specified by... (manifest)
+							</p>
+						</aside>
+					</section>
+				</section>
+
+
+				<section>
+					<section>
+						<h1>Working with SW!</h1>
+
+						<p>
+							How to develop and build your SW!
+							Packages for compiling?
+							Including it?
+						</p>
+					</section>
+				</section>
+
+
+				<section>
+					<section>
+						<h1>Cache!</h1>
+					</section>
+
+					<section>
+						AppCache - Confusing, unclear, obfuscated manifest based API, magical black box
+					</section>
+
+					<section>
+						<h1>How to</h1>
+
+						<p>
+							Actually explain how to use it.
+						</p>
+
+						<h1><b>Make it aparent that SW is just a different context that receives all these events and because of its context it has access to all those APIs</b></h1>
+						<p>(can we send custom events to SW???)</p>
+
+						<h2>pull out a few other events which are relevant to the Cache API</h2>
+
+						<code>
+							...
+							'install', 'fetch'
+							...
+						</code>
+					</section>
+
+					<section>
+						<h1>How to refresh assets in cache programatically?</h1>
+					</section>
+
+					<section>
+						<h1>Caching and versioning assets</h1>
+
+						<p>
+							app.css?v=1.0.0 =&gt; app.css?v=1.1.0 <br />
+							<small>or</small> <br />
+							app-v1.css =&gt; app-v2.css
+						</p>
+
+						<p>
+							Can also use hash of the content. Which cleaverly means that if content does not change the cache is not broken.
+						</p>
+
+						<p>
+							Consider breaking cache all the time when in local dev. Can use time stamp for <code>?v</code>
+						</p>
+
+						<p>
+							Refreshing - client revalidates with server on refresh.
+						</p>
+
+						<aside class="notes">
+							Client has 1.0.0 cached, it then receives 1.1.0, server doesn't need to have 1.0.0 because it hopefully no longer uses it and Client will get rid of it when it does no longer need it.
+						</aside>
+					</section>
+				</section>
+
+
+				<section>
+					<section>
+						<h1>Service Workers!</h1>
+					</section>
+
+					<section>
+						<ul>
+							<li>Storing requests and response</li>
+							<li>Custom 404 pages – guardian.com has crossword</li>
+							<li>'Offline first' concept – load from cache first then load the content</li>
+							<li>Unlike cache it won’t remove after a period of time</li>
+							<li>Background Syncing</li>
+							<li>Streaming</li>
+						</ul>
+
+						<ul>
+							<li class="fragment">Extensible web manifest</li>
+							<li class="fragment">Offline network handling</li>
+							<li class="fragment">Fetch API</li>
+							<li class="fragment">Cache</li>
+							<li class="fragment">Background Sync</li>
+							<li class="fragment">Push</li>
+						</ul>
+					</section>
+
+					<section>
+						<h1>Lie-Fi</h1>
+					</section>
+
+					<section>
+						image of where service worker sits
+					</section>
+
+					<section>
+						<h1>Adding SW</h1>
+						<code>
+							registerServiceWorker('/')...
+						</code>
+					</section>
+
+					<section>
+						<h1>Inside the SW...</h1>
+
+						<ul>
+							<li><b>Features</b> we have available inside...</li>
+							<li>... and <b>only</b> inside SW...</li>
+							<li>... and <b>WHY?!</b></li>
+						</ul>
+
+						<code>
+							and some code of how we use them?
+						</code>
+					</section>
+
+					<section>
+						<h1>Resources</h1>
+
+						<ul>
+							<li>
+								<a target="_blank" href="https://jakearchibald-gcm.appspot.com/">
+									https://jakearchibald-gcm.appspot.com/
+								</a>
+							</li>
+							<li>
+								<a target="_blank" href="https://github.com/jakearchibald/indexeddb-promised">IndexedDB Promised</a>
+							</li>
+						</ul>
+					</section>
+				</section>
+
+
+				<section>
+					<section>
+						<h1>Push!</h1>
+
+						<p>Push messaging, send message from server to client.</p>
+					</section>
+
+					<section>
+						<h1>Google Cloud Platform</h1>
+
+						<p>
+							Register for GCP to setup Google Cloud Messaging and be able to push messages directly to Chrome!
+						</p>
+					</section>
+
+					<section>
+						Registering, expiring, refreshing, multiple devices
+					</section>
+
+					<section>
+						<code>
+							https://android.googleapis.com/gcm/send/<b>dxcNlXkngUc:APA91bHtGp8RzObJweu1wcyBVP5bqa8qzLoms5rJ_iO09u22zTkIEhhQ68SN4iFm8JtPzyJkn2AE1CL_JT_QmcPtiDzZielDYLzG_jwRAp6zwRHnoTA5cHtqrFNR-YPXUnwXeywaK8LG</b>
+						</code>
+					</section>
+
+					<section>
+						<h1>Send notification</h1>
+
+						<pre>
+							<!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
+							<code class="hljs lang-bash" data-trim contenteditable>
+curl
+--header "Authorization: key=&lt;PUSH_API_KEY&gt;"
+--header "Content-Type: application/json"
+https://android.googleapis.com/gcm/send -d
+	"{\"registration_ids\":[
+		\"&lt;USER_REGISTRATION_ID&gt;\"
+	]}"
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						https://developers.google.com/web/updates/2015/03/push-notifications-on-the-open-web
+					</section>
+				</section>
+
+
+				<section>
+					<section>
+						<h1>Sync!</h1>
+					</section>
+				</section>
+
+
+				<section>
+					<section>
+						<h1>Development</h1>
+					</section>
+
+					<section>
+						<h1>Secure Origins</h1>
+					</section>
+
+					<section>
+						<h1>Debugging</h1>
+					</section>
+				</section>
+
+
+				<section>
+					<section>
+						<h1>Fetch</h1>
+
+						<h2>New request API</h2>
+					</section>
+
+					<section>
+						<p>...</p>
+					</section>
+
+					<section>
+						<h1>ExtendableEvent.waitUntil()</h1>
+
+						<p>
+							method extends the lifetime of the event
+						</p>
+
+						<p>
+							Associated with `instal` and `activate` SW events
+						</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h1>Streams... ?</h1>
+
+						<h2>https://streams.spec.whatwg.org/</h2>
+					</section>
+
+					<section>
+						<p>...</p>
+					</section>
+				</section>
+
+
+				<section>
+					<h1>Learnings</h1>
+
+					<p>Think this is for a retrospective on a progressive app more than </p>
+
+					<ul>
+						<li>Service Workers</li>
+						<li>Promisses</li>
+						<li>Google Cloud Platform</li>
+						<li>Local Mobile Debugging</li>
+					</ul>
+				</section>
+
+
+				<section>
+					<h1><em>Fin.</em></h1>
+
+					<p>Questions?</p>
+				</section>
+
+
+			</div>
+
+		</div>
+
+		<script src="/libs/reveal.js/lib/js/head.min.js"></script>
+		<script src="/libs/reveal.js/js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: '/libs/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '/libs/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '/libs/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '/libs/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '/libs/reveal.js/plugin/zoom-js/zoom.js', async: true },
+					{ src: '/libs/reveal.js/plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
