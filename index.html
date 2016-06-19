@@ -96,9 +96,46 @@
 
 
 				<section>
-					<h1>What are PWAs?</h1>
+					<section>
+						<h1>What are PWAs?</h1>
 
-					<p><q><i>here goes some definition of what Google thinks PWAs are, how they think about it</i></q></p>
+						<p>
+							<q>
+								Progressive Web Applications take advantage of new technologies
+								to bring the best of mobile sites and native applications to users.
+								They're reliable, fast, and engaging.
+							</q>
+						</p>
+
+						<aside class="notes">
+							So, as you can see, PWAs are not a single specific thing.
+							It's an overarching concept like, functional programming,
+							<i>...something...</i>
+							or web applications themselves.
+						</aside>
+					</section>
+
+					<section>
+						<h1>What makes up PWA</h1>
+
+						<ul>
+							<li class="fragment">Instant Loading</li> <!-- Performance -->
+							<li class="fragment">Add to Homescreen</li> <!-- Integration -->
+							<li class="fragment">Push Notifications</li> <!-- Integration -->
+							<li class="fragment">Fast</li> <!-- Performance -->
+							<li class="fragment">Secure</li>
+							<li class="fragment">Responsive</li>
+						</ul>
+
+						<h2>Simplified... kinda</h2>
+
+						<ul>
+							<li>Performance</li>
+							<li>Integration</li>
+							<li>Resiliance</li>
+						</ul>
+					</section>
+
 				</section>
 
 
@@ -274,6 +311,11 @@
 						<code>
 							registerServiceWorker('/')...
 						</code>
+
+						<p>
+							Remember, the of the provided scope ('/') is not under the max scope allowed ('/js/').
+							Adjust the scope, move the SW script, or use Servive-Worker-Allowed HTTP header to allow the scope.
+						</p>
 					</section>
 
 					<section>
@@ -312,6 +354,17 @@
 						<h1>Push!</h1>
 
 						<p>Push messaging, send message from server to client.</p>
+					</section>
+
+					<section>
+						<p>
+							Re-engage with your audience by showing, relevant, timely,
+							and contextual notifications.
+						</p>
+
+						<aside class="notes">
+							 ... when the browser is closed
+						</aside>
 					</section>
 
 					<section>
