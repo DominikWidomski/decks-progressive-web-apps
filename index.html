@@ -386,7 +386,7 @@
 					</section>
 
 					<section>
-						<h1>Send notification</h1>
+						<h1>Send notification / PUSH MESSAGE</h1>
 
 						<pre>
 							<!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
@@ -408,6 +408,35 @@ https://android.googleapis.com/gcm/send -d
 					</section>
 
 					<section>
+						<h1>In and Out</h1>
+						<h2>... of the SW</h2>
+
+						<h3>WINDOW</h3>
+						<pre>
+							<code class="hljs lang-javascript">
+if (!("Notification" in window)) {
+  alert("This browser does not support desktop notification");
+}
+
+// Let's check whether notification permissions have already been granted
+else if (Notification.permission === "granted") {
+  // If it's okay let's create a notification
+  var notification = new Notification("Hi there!");
+}
+
+// Otherwise, we need to ask the user for permission
+else if (Notification.permission !== 'denied') {
+  Notification.requestPermission(function (permission) {
+    // If the user accepts, let's create a notification
+    if (permission === "granted") {
+      var notification = new Notification("Hi there!");
+    }
+  });
+}
+							</code>
+						</pre>
+
+						<h3>SERVICE WORKER</h3>
 						<pre>
 							<code class="hljs lang-javascript">
 navigator.serviceWorker.register('sw.js');
@@ -428,6 +457,10 @@ function showNotification() {
 }
 							</code>
 						</pre>
+
+						<aside class="notes">
+							https://developer.mozilla.org/en/docs/Web/API/notification
+						</aside>
 					</section>
 				</section>
 
