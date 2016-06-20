@@ -468,6 +468,37 @@ function showNotification() {
 				<section>
 					<section>
 						<h1>Sync!</h1>
+
+						<aside class="notes">
+							https://developers.google.com/web/updates/2015/12/background-sync?hl=en
+						</aside>
+					</section>
+
+					<section>
+						<h1>Register for sync</h1>
+
+						<pre class="hljs lang-javascript">
+							<code>
+// Then later, request a one-off sync:
+navigator.serviceWorker.ready.then(function(swRegistration) {
+  return swRegistration.sync.register('myFirstSync');
+});
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<h1>Respond to sync</h1>
+
+						<pre class="hljs lang-javascript">
+							<code>
+self.addEventListener('sync', function(event) {
+  if (event.tag == 'myFirstSync') {
+    event.waitUntil(doSomeStuff());
+  }
+});
+							</code>
+						</pre>
 					</section>
 				</section>
 
