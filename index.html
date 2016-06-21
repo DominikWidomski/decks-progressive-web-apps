@@ -203,15 +203,27 @@
 
 									Activating stage can also be extended with `event.waitUntil()`
 
-									`self.clients.claim()` or `self.skipWaiting()` can be used to start controling all open clients without reloading them.
+									`self.clients.claim()` or `self.skipWaiting()` or `event.replace()` can be used to start controling all open clients without reloading them.
 									Remember this can cause issues with asset versions.
+
+									<p>
+										The exception is if the worker calls `event.replace()` in the install event, then it takes control of all in-scope pages immediately.
+									</p>
 								</aside>
 							</li>
 							<li>
 								The Service Worker will now control pages.
 
+								<pre class="hljs lang-javascript">
+									<code>
+										navigator.serviceWorker.controller
+									</code>
+								</pre>
+
 								<aside class="notes">
 									...but only those opened after the `register()` is successful. i.e. a document starts life with or without a Service Worker and maintains that for its lifetime. So documents will have to be reloaded to actually be controlled.
+
+									`navigator.serviceWorker.controller` points to the SW controlling the page. `null` otherwise.
 								</aside>
 							</li>
 						</ol>
