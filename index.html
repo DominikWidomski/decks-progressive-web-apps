@@ -190,6 +190,8 @@
 								<aside class="notes">
 									When the service worker is installed, it then receives an `activate` event. The primary use of `onactivate` is for cleanup of resources used in previous versions of a Service Worker script, like removing olde caches.
 
+									Also, migrate old data left over from previous versions of SW.
+
 									HOW TO DO THAT?!?!!??!? How do you find the previous version of the worker???
 									There's this `navigator.serviceWorker.getRegistration(s?)()`
 
@@ -242,6 +244,7 @@
 						<p>
 							In `activate` event, we can do anything that would have broken old SW when it was still in power.
 							Clearing old cache is a good example.
+							Also, migrating data, anything local that's leftover from previous versions.
 						</p>
 
 						<p>
