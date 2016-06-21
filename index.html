@@ -175,7 +175,13 @@
 									<p>
 										What is `install` fails? What if not all promisses resolve, things aren't cached? Or will they still resolve to failed and install will eventually complete?
 
-										<q>"If the promise is rejected, the install fails, and the worker won’t do anything. This is ok, as you can fix your code and then try again the next time registration occurs."</q>
+										<q>
+											"If the promise is rejected, the install fails, and the worker won’t do anything. This is ok, as you can fix your code and then try again the next time registration occurs."
+										</q>
+
+										<p>
+											If it fails, SW becomes redundant and will be garbage collected.
+										</p>
 									</p>
 								</aside>
 							</li>
