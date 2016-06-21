@@ -762,34 +762,176 @@ self.addEventListener('sync', function(event) {
 
 				<section>
 					<section>
-						<h1>Fetch</h1>
+						<h1>Fetch!</h1>
 
 						<h2>New request API</h2>
 					</section>
 
 					<section>
-						<p>...</p>
+						<p>Previously achieved with `XMLHttpRequest`</p>
+						<p>
+							A more straight-forward promise based way of making network requests.
+						</p>
 					</section>
 
 					<section>
-						<h1>ExtendableEvent.waitUntil()</h1>
+						<pre class="hljs lang-javascript">
+fetch(path).then(response => {});
+						</pre>
+						<aside class="notes">
+							`fetch(path)` takes a path to a resource and returns a `Promise` resolving to contiain `Response` object.
 
-						<p>
-							Method extends the lifetime of the event.
-						</p>
-
-						<p>
-							Associated with `instal` and `activate` SW events.
-						</p>
-
-						<p>
-							Extends installing, activation or any stage until promise is resolved.
-						</p>
-
-						<p>
-							Blocks other events.
-						</p>
+							This is a HTTP response. You're then responsible to do what you want with it.
+						</aside>
 					</section>
+
+					<section>
+						<h1>XMLHttpRequest vs fetch()</h1>
+
+						<div class="row">
+							<div class="col col-md-6">
+								<pre class="hljs lang-javascript">
+									<code>
+var xhr = new XMLHttpRequest();
+xhr.open('GET', url);
+xhr.responseType = 'json';
+
+xhr.onload = function() {
+  console.log(xhr.response);
+};
+
+xhr.onerror = function() {
+  console.log("Booo");
+};
+
+xhr.send();
+									</code>
+								</pre>
+							</div>
+
+							<div class="col col-md-6">
+								<pre class="hljs lang-javascript">
+									<code>
+fetch('flowers.jpg')
+.then(function(response) {
+  return response.blob();
+})
+.then(function(myBlob) {
+  var objectURL = URL.createObjectURL(myBlob);
+  myImage.src = objectURL;
+});
+
+// or
+
+fetch(url).then(r => r.json())
+  .then(data => console.log(data))
+  .catch(e => console.log("Booo"))
+									</code>
+								</pre>
+							</div>
+						</div>
+					</section>
+
+
+					<section>
+						<h1>`Request` and `Response`</h1>
+
+						<p>
+							New constructors related to fetch
+						</p>
+
+						<pre class="hljs lang-javascript"><code>
+							new Request(url);
+						</code></pre>
+
+						<pre class="hljs lang-javascript"><code>
+							new Response(body, options)
+						</code></pre>
+					</section>
+
+
+					<section>
+						<h1>Response</h1>
+
+						<div class="row">
+							<div class="col col-md-6">
+								Response.clone()
+								Response.error()
+								Response.redirect()
+							</div>
+							<div class="col col-md-6">
+								Response implements Body:
+
+								Body.arrayBuffer()
+								Body.blob()
+								Body.formData()
+								Body.json()
+								Body.text()
+							</div>
+						</div>
+					</section>
+
+
+					<section>
+						<h1>Cloning</h1>
+
+						<p>Response can only be read once</p>
+
+						<aside class="notes">
+							Simple 'read' methods on response use stream reader, they drain/consume the response.
+							Response needs to be cloned to be used again, also for caching.
+						</aside>
+					</section>
+
+
+					<section>
+						<h1>CORS and opaque</h1>
+
+						<code>fetch(externalUrl, { mode: 'no-cors' })</code>
+
+						<p>
+							`response.type === 'opaque'`
+						</p>
+
+						<aside class="notes">
+							<b>Cross Site Resource Sharing</b>
+							To make a request from
+
+							This is similar to the request an &lt;img&gt; makes.
+							You can't read the content of the response as it could contain private information, but it can be consumed by other APIs.
+
+							Can be cached or returned to the original fetch request, etc.
+
+							Response is severely restricted:
+
+							<ul>
+								<li>body is null</li>
+								<li>ok is false</li>
+								<li>status is 0</li>
+							</ul>
+
+							other statuses include:
+
+							basic: normal, same origin response
+							cors: response from a valid cross-origin request
+							error: network error. status is 0, headers are empty and immutable. This is obtained from Response.error()
+							opaque: response for “no-cors” request to cross-origin resource
+
+							(https://hacks.mozilla.org/2015/03/this-api-is-so-fetching/)
+						</aside>
+					</section>
+
+
+					<section>
+						<h1>Streams...</h1>
+
+						<p>... not today</p>
+
+						<aside class="notes">
+							https://streams.spec.whatwg.org/
+						</aside>
+					</section>
+
 				</section>
 
 
@@ -800,18 +942,6 @@ self.addEventListener('sync', function(event) {
 
 					<section>
 						https://jakearchibald.github.io/isserviceworkerready/
-					</section>
-				</section>
-
-				<section>
-					<section>
-						<h1>Streams... ?</h1>
-
-						<h2>https://streams.spec.whatwg.org/</h2>
-					</section>
-
-					<section>
-						<p>...</p>
 					</section>
 				</section>
 
