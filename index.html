@@ -210,6 +210,33 @@
 							</aside>
 						</p>
 					</section>
+
+					<section>
+						<h1>Updating</h1>
+
+						<p>
+							When updated service worker is requested, it is installed but not yet activated.
+							It waits till there are no more active pages controlled by the old SW and activates.
+
+							`self.clients.claim()` or `self.skipWaiting()` mentioned earlier.
+						</p>
+					</section>
+
+					<section>
+						<h1>Cache and storage</h1>
+
+						<p>
+							In `activate` event, we can do anything that would have broken old SW when it was still in power.
+							Clearing old cache is a good example.
+						</p>
+
+						<p>
+							Also keep in mind that browsers allocate a finite amount of storage per origin.
+							Browser will do its best to keep data for origin but may delete it.
+							SW is a lower level API, with great power comes great responsibility.
+							We gotta clean up after ourselves.
+						</p>
+					</section>
 				</section>
 
 
