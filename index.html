@@ -171,18 +171,32 @@
 									<p>
 										This is really the same kind of procedure as installing a native or Firefox OS app — making everything available for use offline.
 									</p>
+
+									<p>
+										What is `install` fails? What if not all promisses resolve, things aren't cached? Or will they still resolve to failed and install will eventually complete?
+
+										<q>"If the promise is rejected, the install fails, and the worker won’t do anything. This is ok, as you can fix your code and then try again the next time registration occurs."</q>
+									</p>
 								</aside>
 							</li>
 							<li>
 								When the `oninstall` handler completes, the service worker is considered <b>installed</b>.
+								<aside class="notes">
+									`event.waitUntil()` allows us to extend the installation stage until certain number of promises resolve.
+								</aside>
 							</li>
 							<li>
 								Activation.
 								<aside class="notes">
-									When the service worker is installed, it then receives an `activate` event. The primary use of `onactivate` is for cleanup of resources used in previous versions of a Service Worker script.
+									When the service worker is installed, it then receives an `activate` event. The primary use of `onactivate` is for cleanup of resources used in previous versions of a Service Worker script, like removing olde caches.
 
 									HOW TO DO THAT?!?!!??!? How do you find the previous version of the worker???
 									There's this `navigator.serviceWorker.getRegistration(s?)()`
+
+									Activating stage can also be extended with `event.waitUntil()`
+
+									`self.clients.claim()` or `self.skipWaiting()` can be used to start controling all open clients without reloading them.
+									Remember this can cause issues with asset versions.
 								</aside>
 							</li>
 							<li>
