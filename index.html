@@ -60,6 +60,13 @@
 			<div class="slides">
 
 
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+
+
 				<section>
 					<h1>Progressive Web Apps</h1>
 					<h3>22&middot;6&middot;16</h3>
@@ -67,6 +74,13 @@
 						<small>Dom @ DD</small>
 					</p>
 				</section>
+
+
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
 
 
 				<section>
@@ -93,6 +107,13 @@
 						</ul>
 					</section>
 				</section>
+
+
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
 
 
 				<section>
@@ -137,8 +158,98 @@
 							<li>Resiliance</li>
 						</ul>
 					</section>
-
 				</section>
+
+
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+
+
+				<section>
+					<section>
+						<h1>Service Workers!</h1>
+					</section>
+
+					<section>
+						<ul>
+							<li>Storing requests and response</li>
+							<li>Custom 404 pages – guardian.com has crossword</li>
+							<li>'Offline first' concept – load from cache first then load the content</li>
+							<li>Unlike cache it won’t remove after a period of time</li>
+							<li>Background Syncing</li>
+							<li>Streaming</li>
+						</ul>
+
+						<ul>
+							<li class="fragment">Extensible web manifest</li>
+							<li class="fragment">Offline network handling</li>
+							<li class="fragment">Fetch API</li>
+							<li class="fragment">Cache</li>
+							<li class="fragment">Background Sync</li>
+							<li class="fragment">Push</li>
+						</ul>
+					</section>
+
+					<section>
+						<h1>Lie-Fi</h1>
+					</section>
+
+					<section>
+						image of where service worker sits
+					</section>
+
+					<section>
+						<h1>Adding SW</h1>
+
+						<code>
+							registerServiceWorker('/')...
+						</code>
+
+						<p>
+							Remember, the of the provided scope ('/') is not under the max scope allowed ('/js/').
+							Adjust the scope, move the SW script, or use Servive-Worker-Allowed HTTP header to allow the scope.
+						</p>
+					</section>
+
+					<section>
+						<h1>Inside the SW...</h1>
+
+						<ul>
+							<li><b>Features</b> we have available inside...</li>
+							<li>... and <b>only</b> inside SW...</li>
+							<li>... and <b>WHY?!</b></li>
+						</ul>
+
+						<code>
+							and some code of how we use them?
+						</code>
+					</section>
+
+					<section>
+						<h1>Resources</h1>
+
+						<ul>
+							<li>
+								<a target="_blank" href="https://jakearchibald-gcm.appspot.com/">
+									https://jakearchibald-gcm.appspot.com/
+								</a>
+							</li>
+							<li>
+								<a target="_blank" href="https://github.com/jakearchibald/indexeddb-promised">IndexedDB Promised</a>
+							</li>
+						</ul>
+					</section>
+				</section>
+
+
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
 
 
 				<section>
@@ -281,439 +392,11 @@
 				</section>
 
 
-				<section data-background="#A53F2B">
-					<section>
-						<h1>Homescreen!</h1>
-					</section>
-
-					<section>
-						<ul>
-							<li class="fragment">Icon on homescreen</li>
-							<li class="fragment">Splash Screen</li>
-							<li class="fragment">Integrated with device</li>
-							<li class="fragment">Manifest file in JSON</li>
-						</ul>
-
-						<aside class="notes">
-							<p>
-								Manifest much like Android / Java development
-							</p>
-						</aside>
-					</section>
-				</section>
-
-
-				<section>
-					<section>
-						<h1>Manifest</h1>
-
-						<code>
-							...
-							snippets of code from the manifest that are relevant to the homescreen
-							...
-							icons!
-							...
-							splash screen
-							...
-							how it presents itself? standalone etc?
-							...
-						</code>
-
-						<aside class="notes">
-							<p>
-								First level citizen in the apps carousel if you choose so, which is specified by... (manifest)
-							</p>
-						</aside>
-					</section>
-
-					<section>
-						<h1>theme-color</h1>
-
-						<code>&lt;meta name=&quot;theme-color&quot; content=&quot;#e92c6c&quot;&gt;</code>
-
-						<aside class="notes">
-							https://developers.google.com/web/updates/2014/11/Support-for-theme-color-in-Chrome-39-for-Android?hl=en
-						</aside>
-					</section>
-				</section>
-
-
-				<section>
-					<section>
-						<h1>Cache!</h1>
-					</section>
-
-					<section>
-						<h1>Old</h1>
-
-						AppCache - Confusing, unclear, obfuscated manifest based API, magical black box
-					</section>
-
-					<section>
-						<h1>New</h1>
-
-						<p>
-							Cache is a store of `Response`s keyed against `Request`s.
-						</p>
-
-						<aside class="notes">
-							We manually save and delete from it, storing responses to any request and retrieving requests.
-						</aside>
-					</section>
-
-					<section>
-						<h1>How to</h1>
-
-						<p>
-							Actually explain how to use it.
-						</p>
-
-						<h1><b>Make it aparent that SW is just a different context that receives all these events and because of its context it has access to all those APIs</b></h1>
-						<p>(can we send custom events to SW???)</p>
-
-						<h2>pull out a few other events which are relevant to the Cache API</h2>
-
-						<code>
-							...
-							'install', 'activate', 'message'
-							...
-							'fetch', 'sync', 'push'
-							...
-						</code>
-					</section>
-
-					<section>
-						<h1>How to refresh assets in cache programatically?</h1>
-					</section>
-
-					<section>
-						<h1>Caching and versioning assets</h1>
-
-						<p>
-							app.css?v=1.0.0 =&gt; app.css?v=1.1.0 <br />
-							<small>or</small> <br />
-							app-v1.css =&gt; app-v2.css
-						</p>
-
-						<p>
-							Can also use hash of the content. Which cleaverly means that if content does not change the cache is not broken.
-						</p>
-
-						<p>
-							Consider breaking cache all the time when in local dev. Can use time stamp for <code>?v</code>
-						</p>
-
-						<p>
-							Refreshing - client revalidates with server on refresh.
-						</p>
-
-						<aside class="notes">
-							Client has 1.0.0 cached, it then receives 1.1.0, server doesn't need to have 1.0.0 because it hopefully no longer uses it and Client will get rid of it when it does no longer need it.
-						</aside>
-					</section>
-				</section>
-
-
-				<section>
-					<section>
-						<h1>Service Workers!</h1>
-					</section>
-
-					<section>
-						<ul>
-							<li>Storing requests and response</li>
-							<li>Custom 404 pages – guardian.com has crossword</li>
-							<li>'Offline first' concept – load from cache first then load the content</li>
-							<li>Unlike cache it won’t remove after a period of time</li>
-							<li>Background Syncing</li>
-							<li>Streaming</li>
-						</ul>
-
-						<ul>
-							<li class="fragment">Extensible web manifest</li>
-							<li class="fragment">Offline network handling</li>
-							<li class="fragment">Fetch API</li>
-							<li class="fragment">Cache</li>
-							<li class="fragment">Background Sync</li>
-							<li class="fragment">Push</li>
-						</ul>
-					</section>
-
-					<section>
-						<h1>Lie-Fi</h1>
-					</section>
-
-					<section>
-						image of where service worker sits
-					</section>
-
-					<section>
-						<h1>Adding SW</h1>
-						<code>
-							registerServiceWorker('/')...
-						</code>
-
-						<p>
-							Remember, the of the provided scope ('/') is not under the max scope allowed ('/js/').
-							Adjust the scope, move the SW script, or use Servive-Worker-Allowed HTTP header to allow the scope.
-						</p>
-					</section>
-
-					<section>
-						<h1>Inside the SW...</h1>
-
-						<ul>
-							<li><b>Features</b> we have available inside...</li>
-							<li>... and <b>only</b> inside SW...</li>
-							<li>... and <b>WHY?!</b></li>
-						</ul>
-
-						<code>
-							and some code of how we use them?
-						</code>
-					</section>
-
-					<section>
-						<h1>Resources</h1>
-
-						<ul>
-							<li>
-								<a target="_blank" href="https://jakearchibald-gcm.appspot.com/">
-									https://jakearchibald-gcm.appspot.com/
-								</a>
-							</li>
-							<li>
-								<a target="_blank" href="https://github.com/jakearchibald/indexeddb-promised">IndexedDB Promised</a>
-							</li>
-						</ul>
-					</section>
-				</section>
-
-
-				<section>
-					<section>
-						<h1>Push!</h1>
-
-						<p>Push messaging, send message from server to client.</p>
-					</section>
-
-					<section>
-						<p>
-							Re-engage with your audience by showing, relevant, timely,
-							and contextual notifications.
-						</p>
-
-						<aside class="notes">
-							 ... when the browser is closed
-						</aside>
-					</section>
-
-					<section>
-						<h1>Google Cloud Platform</h1>
-
-						<p>
-							Register for GCP to setup Google Cloud Messaging and be able to push messages directly to Chrome!
-						</p>
-					</section>
-
-					<section>
-						Registering, expiring, refreshing, multiple devices
-					</section>
-
-					<section>
-						<code>
-							https://android.googleapis.com/gcm/send/<b>dxcNlXkngUc:APA91bHtGp8RzObJweu1wcyBVP5bqa8qzLoms5rJ_iO09u22zTkIEhhQ68SN4iFm8JtPzyJkn2AE1CL_JT_QmcPtiDzZielDYLzG_jwRAp6zwRHnoTA5cHtqrFNR-YPXUnwXeywaK8LG</b>
-						</code>
-					</section>
-
-					<section>
-						<h1>Send notification / PUSH MESSAGE</h1>
-
-						<pre>
-							<!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
-							<code class="hljs lang-bash" data-trim contenteditable>
-curl
---header "Authorization: key=&lt;PUSH_API_KEY&gt;"
---header "Content-Type: application/json"
-https://android.googleapis.com/gcm/send -d
-	"{\"registration_ids\":[
-		\"&lt;USER_REGISTRATION_ID&gt;\"
-	]}"
-							</code>
-						</pre>
-					</section>
-
-					<section>
-						https://developers.google.com/web/updates/2015/03/push-notifications-on-the-open-web
-						https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification
-					</section>
-
-					<section>
-						<h1>In and Out</h1>
-						<h2>... of the SW</h2>
-
-						<h3>WINDOW</h3>
-						<pre>
-							<code class="hljs lang-javascript">
-if (!("Notification" in window)) {
-  alert("This browser does not support desktop notification");
-}
-
-// Let's check whether notification permissions have already been granted
-else if (Notification.permission === "granted") {
-  // If it's okay let's create a notification
-  var notification = new Notification("Hi there!");
-}
-
-// Otherwise, we need to ask the user for permission
-else if (Notification.permission !== 'denied') {
-  Notification.requestPermission(function (permission) {
-    // If the user accepts, let's create a notification
-    if (permission === "granted") {
-      var notification = new Notification("Hi there!");
-    }
-  });
-}
-							</code>
-						</pre>
-
-						<h3>SERVICE WORKER</h3>
-						<pre>
-							<code class="hljs lang-javascript">
-navigator.serviceWorker.register('sw.js');
-
-function showNotification() {
-  Notification.requestPermission(function(result) {
-    if (result === 'granted') {
-      navigator.serviceWorker.ready.then(function(registration) {
-        registration.showNotification('Vibration Sample', {
-          body: 'Buzz! Buzz!',
-          icon: '../images/touch/chrome-touch-icon-192x192.png',
-          vibrate: [200, 100, 200, 100, 200, 100, 200],
-          tag: 'vibration-sample'
-        });
-      });
-    }
-  });
-}
-							</code>
-						</pre>
-
-						<aside class="notes">
-							https://developer.mozilla.org/en/docs/Web/API/notification
-						</aside>
-					</section>
-				</section>
-
-
-				<section>
-					<section>
-						<h1>Sync!</h1>
-
-						<aside class="notes">
-							https://developers.google.com/web/updates/2015/12/background-sync?hl=en
-						</aside>
-					</section>
-
-					<section>
-						<p>
-							You can register for sync tasks for when the browser next has internet connectivity.
-						</p>
-
-						<p>
-							Registering sync when you're online fires the event immediately.
-						</p>
-					</section>
-
-					<section>
-						<h1>Register for sync</h1>
-
-						<pre class="hljs lang-javascript">
-							<code>
-// Then later, request a one-off sync:
-navigator.serviceWorker.ready.then(function(swRegistration) {
-  return swRegistration.sync.register('mySyncTag');
-});
-							</code>
-						</pre>
-					</section>
-
-					<section>
-						<h1>Respond to sync</h1>
-
-						<pre class="hljs lang-javascript">
-							<code>
-self.addEventListener('sync', function(event) {
-  if (event.tag == 'mySyncTag') {
-    event.waitUntil(doSomeStuff());
-  }
-});
-							</code>
-						</pre>
-					</section>
-
-					<section>
-						<h1>ExtendableEvent.waitUntil()</h1>
-
-						<p>
-							Method extends the lifetime of the event.
-						</p>
-
-						<p>
-							Associated with `instal` and `activate` SW events.
-						</p>
-
-						<p>
-							Extends installing, activation or any stage until promise is resolved.
-						</p>
-
-						<p>
-							Blocks other events.
-						</p>
-					</section>
-
-					<section>
-						<h1>Tags</h1>
-
-						<p>
-							Sync are registered with a tag ('mySyncTag').
-							Registering to the same tag will coalesce the with existing sync.
-							Which means it will only fire <b>ONCE</b>.
-						</p>
-					</section>
-
-					<section>
-						<h1>Failure</h1>
-
-						<p>
-							If it fails, another sync will be scheduled to retry.
-						</p>
-
-						<aside class="notes">
-							Retry syncs also wait for connectivity, and employ an exponential back-off.
-						</aside>
-					</section>
-
-					<section>
-						<h1>Restrictions</h1>
-
-						<aside class="notes">
-							(Not sure how accurate those are, read in an article from 12/2015)
-						</aside>
-
-						<p class="fragment">
-							Can only be registered when user is on the page.
-						</p>
-
-						<p class="fragment">
-							The event execution time is capped.
-
-							<aside class="notes">
-								... cannot ping server continuously or execute long running tasks.
-							</aside>
-						</p>
-					</section>
-				</section>
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
 
 
 				<section>
@@ -878,6 +561,407 @@ fetch(url).then(r => r.json())
 				</section>
 
 
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+
+
+				<section>
+					<section>
+						<h1>Cache!</h1>
+					</section>
+
+					<section>
+						<h1>Old</h1>
+
+						AppCache - Confusing, unclear, obfuscated manifest based API, magical black box
+					</section>
+
+					<section>
+						<h1>New</h1>
+
+						<p>
+							Cache is a store of `Response`s keyed against `Request`s.
+						</p>
+
+						<aside class="notes">
+							We manually save and delete from it, storing responses to any request and retrieving requests.
+						</aside>
+					</section>
+
+					<section>
+						<h1>How to</h1>
+
+						<p>
+							Actually explain how to use it.
+						</p>
+
+						<h1><b>Make it aparent that SW is just a different context that receives all these events and because of its context it has access to all those APIs</b></h1>
+						<p>(can we send custom events to SW???)</p>
+
+						<h2>pull out a few other events which are relevant to the Cache API</h2>
+
+						<code>
+							...
+							'install', 'activate', 'message'
+							...
+							'fetch', 'sync', 'push'
+							...
+						</code>
+					</section>
+
+					<section>
+						<h1>How to refresh assets in cache programatically?</h1>
+					</section>
+
+					<section>
+						<h1>Caching and versioning assets</h1>
+
+						<p>
+							app.css?v=1.0.0 =&gt; app.css?v=1.1.0 <br />
+							<small>or</small> <br />
+							app-v1.css =&gt; app-v2.css
+						</p>
+
+						<p>
+							Can also use hash of the content. Which cleaverly means that if content does not change the cache is not broken.
+						</p>
+
+						<p>
+							Consider breaking cache all the time when in local dev. Can use time stamp for <code>?v</code>
+						</p>
+
+						<p>
+							Refreshing - client revalidates with server on refresh.
+						</p>
+
+						<aside class="notes">
+							Client has 1.0.0 cached, it then receives 1.1.0, server doesn't need to have 1.0.0 because it hopefully no longer uses it and Client will get rid of it when it does no longer need it.
+						</aside>
+					</section>
+				</section>
+
+
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+
+
+				<section>
+					<section>
+						<h1>Push!</h1>
+
+						<p>Push messaging, send message from server to client.</p>
+					</section>
+
+					<section>
+						<p>
+							Re-engage with your audience by showing, relevant, timely,
+							and contextual notifications.
+						</p>
+
+						<aside class="notes">
+							 ... when the browser is closed
+						</aside>
+					</section>
+
+					<section>
+						<h1>Google Cloud Platform</h1>
+
+						<p>
+							Register for GCP to setup Google Cloud Messaging and be able to push messages directly to Chrome!
+						</p>
+					</section>
+
+					<section>
+						Registering, expiring, refreshing, multiple devices
+					</section>
+
+					<section>
+						<code>
+							https://android.googleapis.com/gcm/send/<b>dxcNlXkngUc:APA91bHtGp8RzObJweu1wcyBVP5bqa8qzLoms5rJ_iO09u22zTkIEhhQ68SN4iFm8JtPzyJkn2AE1CL_JT_QmcPtiDzZielDYLzG_jwRAp6zwRHnoTA5cHtqrFNR-YPXUnwXeywaK8LG</b>
+						</code>
+					</section>
+
+					<section>
+						<h1>Send notification / PUSH MESSAGE</h1>
+
+						<pre>
+							<!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
+							<code class="hljs lang-bash" data-trim contenteditable>
+curl
+--header "Authorization: key=&lt;PUSH_API_KEY&gt;"
+--header "Content-Type: application/json"
+https://android.googleapis.com/gcm/send -d
+	"{\"registration_ids\":[
+		\"&lt;USER_REGISTRATION_ID&gt;\"
+	]}"
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						https://developers.google.com/web/updates/2015/03/push-notifications-on-the-open-web
+						https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification
+					</section>
+
+					<section>
+						<h1>In and Out</h1>
+						<h2>... of the SW</h2>
+
+						<h3>WINDOW</h3>
+						<pre>
+							<code class="hljs lang-javascript">
+if (!("Notification" in window)) {
+  alert("This browser does not support desktop notification");
+}
+
+// Let's check whether notification permissions have already been granted
+else if (Notification.permission === "granted") {
+  // If it's okay let's create a notification
+  var notification = new Notification("Hi there!");
+}
+
+// Otherwise, we need to ask the user for permission
+else if (Notification.permission !== 'denied') {
+  Notification.requestPermission(function (permission) {
+    // If the user accepts, let's create a notification
+    if (permission === "granted") {
+      var notification = new Notification("Hi there!");
+    }
+  });
+}
+							</code>
+						</pre>
+
+						<h3>SERVICE WORKER</h3>
+						<pre>
+							<code class="hljs lang-javascript">
+navigator.serviceWorker.register('sw.js');
+
+function showNotification() {
+  Notification.requestPermission(function(result) {
+    if (result === 'granted') {
+      navigator.serviceWorker.ready.then(function(registration) {
+        registration.showNotification('Vibration Sample', {
+          body: 'Buzz! Buzz!',
+          icon: '../images/touch/chrome-touch-icon-192x192.png',
+          vibrate: [200, 100, 200, 100, 200, 100, 200],
+          tag: 'vibration-sample'
+        });
+      });
+    }
+  });
+}
+							</code>
+						</pre>
+
+						<aside class="notes">
+							https://developer.mozilla.org/en/docs/Web/API/notification
+						</aside>
+					</section>
+				</section>
+
+
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+
+
+				<section>
+					<section>
+						<h1>Sync!</h1>
+
+						<aside class="notes">
+							https://developers.google.com/web/updates/2015/12/background-sync?hl=en
+						</aside>
+					</section>
+
+					<section>
+						<p>
+							You can register for sync tasks for when the browser next has internet connectivity.
+						</p>
+
+						<p>
+							Registering sync when you're online fires the event immediately.
+						</p>
+					</section>
+
+					<section>
+						<h1>Register for sync</h1>
+
+						<pre class="hljs lang-javascript">
+							<code>
+// Then later, request a one-off sync:
+navigator.serviceWorker.ready.then(function(swRegistration) {
+  return swRegistration.sync.register('mySyncTag');
+});
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<h1>Respond to sync</h1>
+
+						<pre class="hljs lang-javascript">
+							<code>
+self.addEventListener('sync', function(event) {
+  if (event.tag == 'mySyncTag') {
+    event.waitUntil(doSomeStuff());
+  }
+});
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<h1>ExtendableEvent.waitUntil()</h1>
+
+						<p>
+							Method extends the lifetime of the event.
+						</p>
+
+						<p>
+							Associated with `instal` and `activate` SW events.
+						</p>
+
+						<p>
+							Extends installing, activation or any stage until promise is resolved.
+						</p>
+
+						<p>
+							Blocks other events.
+						</p>
+					</section>
+
+					<section>
+						<h1>Tags</h1>
+
+						<p>
+							Sync are registered with a tag ('mySyncTag').
+							Registering to the same tag will coalesce the with existing sync.
+							Which means it will only fire <b>ONCE</b>.
+						</p>
+					</section>
+
+					<section>
+						<h1>Failure</h1>
+
+						<p>
+							If it fails, another sync will be scheduled to retry.
+						</p>
+
+						<aside class="notes">
+							Retry syncs also wait for connectivity, and employ an exponential back-off.
+						</aside>
+					</section>
+
+					<section>
+						<h1>Restrictions</h1>
+
+						<aside class="notes">
+							(Not sure how accurate those are, read in an article from 12/2015)
+						</aside>
+
+						<p class="fragment">
+							Can only be registered when user is on the page.
+						</p>
+
+						<p class="fragment">
+							The event execution time is capped.
+
+							<aside class="notes">
+								... cannot ping server continuously or execute long running tasks.
+							</aside>
+						</p>
+					</section>
+				</section>
+
+
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+
+
+				<section data-background="#A53F2B">
+					<section>
+						<h1>Homescreen!</h1>
+					</section>
+
+					<section>
+						<ul>
+							<li class="fragment">Icon on homescreen</li>
+							<li class="fragment">Splash Screen</li>
+							<li class="fragment">Integrated with device</li>
+							<li class="fragment">Manifest file in JSON</li>
+						</ul>
+
+						<aside class="notes">
+							<p>
+								Manifest much like Android / Java development
+							</p>
+						</aside>
+					</section>
+				</section>
+
+
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+
+
+				<section>
+					<section>
+						<h1>Manifest</h1>
+
+						<code>
+							...
+							snippets of code from the manifest that are relevant to the homescreen
+							...
+							icons!
+							...
+							splash screen
+							...
+							how it presents itself? standalone etc?
+							...
+						</code>
+
+						<aside class="notes">
+							<p>
+								First level citizen in the apps carousel if you choose so, which is specified by... (manifest)
+							</p>
+						</aside>
+					</section>
+
+					<section>
+						<h1>theme-color</h1>
+
+						<code>&lt;meta name=&quot;theme-color&quot; content=&quot;#e92c6c&quot;&gt;</code>
+
+						<aside class="notes">
+							https://developers.google.com/web/updates/2014/11/Support-for-theme-color-in-Chrome-39-for-Android?hl=en
+						</aside>
+					</section>
+				</section>
+
+
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+
+
 				<section>
 					<section>
 						<h1>When?</h1>
@@ -887,6 +971,13 @@ fetch(url).then(r => r.json())
 						https://jakearchibald.github.io/isserviceworkerready/
 					</section>
 				</section>
+
+
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
 
 
 				<section>
@@ -899,11 +990,25 @@ fetch(url).then(r => r.json())
 				</section>
 
 
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+
+
 				<section>
 					<h1><em>Fin.</em></h1>
 
 					<p>Questions?</p>
 				</section>
+
+
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
+				<!-- ******************************************************************************************************* -->
 
 
 			</div>
