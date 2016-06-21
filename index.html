@@ -126,8 +126,10 @@
 							<li class="fragment">Secure</li>
 							<li class="fragment">Responsive</li>
 						</ul>
+					</section>
 
-						<h2>Simplified... kinda</h2>
+					<section>
+						<h1>Simplified... kinda</h1>
 
 						<ul>
 							<li>Performance</li>
@@ -372,7 +374,20 @@
 					</section>
 
 					<section>
+						<h1>Old</h1>
 						AppCache - Confusing, unclear, obfuscated manifest based API, magical black box
+					</section>
+
+					<section>
+						<h1>New</h1>
+
+						<p>
+							Cache is a store of `Response`s keyed against `Request`s.
+						</p>
+
+						<aside class="notes">
+							We manually save and delete from it, storing responses to any request and retrieving requests.
+						</aside>
 					</section>
 
 					<section>
