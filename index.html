@@ -140,6 +140,64 @@
 
 
 				<section>
+					<section>
+						<h1>Service Worker Life Cycle</h1>
+					</section>
+
+					<section>
+						<ol>
+							<li>
+								Fetch and register SW via `serviceWorkerContainer.register()`
+							</li>
+							<li>
+								If successful, the service worker is executed in a `ServiceWorkerGlobalScope`.
+								<aside class="notes">
+									This is basically a special kind of worker context, running off the main script execution thread, with no DOM access.
+								</aside>
+							</li>
+							<li>
+								The SW is now ready!
+								<aside class="notes">
+									... to process events
+								</aside>
+							</li>
+							<li>
+								Installation of the worker is attempted when service worker-controlled pages are accessed subsequently.
+								<aside class="notes">
+									<p>
+										An Install event is always the first one sent to a service worker (this can be used to start the process of populating an IndexedDB, and caching site assets).
+									</p>
+
+									<p>
+										This is really the same kind of procedure as installing a native or Firefox OS app — making everything available for use offline.
+									</p>
+								</aside>
+							</li>
+							<li>
+								When the `oninstall` handler completes, the service worker is considered <b>installed</b>.
+							</li>
+							<li>
+								Activation.
+								<aside class="notes">
+									When the service worker is installed, it then receives an `activate` event. The primary use of `onactivate` is for cleanup of resources used in previous versions of a Service Worker script.
+
+									HOW TO DO THAT?!?!!??!? How do you find the previous version of the worker???
+									There's this `navigator.serviceWorker.getRegistration(s?)()`
+								</aside>
+							</li>
+							<li>
+								The Service Worker will now control pages.
+
+								<aside class="notes">
+									...but only those opened after the `register()` is successful. i.e. a document starts life with or without a Service Worker and maintains that for its lifetime. So documents will have to be reloaded to actually be controlled.
+								</aside>
+							</li>
+						</ol>
+					</section>
+				</section>
+
+
+				<section>
 					<h1>RAIL</h1>
 					<aside class="notes">
 						RAIL is a performance model.
