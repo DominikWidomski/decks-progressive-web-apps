@@ -630,13 +630,23 @@ function showNotification() {
 					</section>
 
 					<section>
+						<p>
+							You can register for sync tasks for when the browser next has internet connectivity.
+						</p>
+
+						<p>
+							Registering sync when you're online fires the event immediately.
+						</p>
+					</section>
+
+					<section>
 						<h1>Register for sync</h1>
 
 						<pre class="hljs lang-javascript">
 							<code>
 // Then later, request a one-off sync:
 navigator.serviceWorker.ready.then(function(swRegistration) {
-  return swRegistration.sync.register('myFirstSync');
+  return swRegistration.sync.register('mySyncTag');
 });
 							</code>
 						</pre>
@@ -648,12 +658,54 @@ navigator.serviceWorker.ready.then(function(swRegistration) {
 						<pre class="hljs lang-javascript">
 							<code>
 self.addEventListener('sync', function(event) {
-  if (event.tag == 'myFirstSync') {
+  if (event.tag == 'mySyncTag') {
     event.waitUntil(doSomeStuff());
   }
 });
 							</code>
 						</pre>
+					</section>
+
+					<section>
+						<h1>Tags</h1>
+
+						<p>
+							Sync are registered with a tag ('mySyncTag').
+							Registering to the same tag will coalesce the with existing sync.
+							Which means it will only fire <b>ONCE</b>.
+						</p>
+					</section>
+
+					<section>
+						<h1>Failure</h1>
+
+						<p>
+							If it fails, another sync will be scheduled to retry.
+						</p>
+
+						<aside class="notes">
+							Retry syncs also wait for connectivity, and employ an exponential back-off.
+						</aside>
+					</section>
+
+					<section>
+						<h1>Restrictions</h1>
+
+						<aside class="notes">
+							(Not sure how accurate those are, read in an article from 12/2015)
+						</aside>
+
+						<p class="fragment">
+							Can only be registered when user is on the page.
+						</p>
+
+						<p class="fragment">
+							The event execution time is capped.
+
+							<aside class="notes">
+								... cannot ping server continuously or execute long running tasks.
+							</aside>
+						</p>
 					</section>
 				</section>
 
