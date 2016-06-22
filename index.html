@@ -49,6 +49,15 @@
 			ul {
 				width: 100%;
 			}
+
+			.reveal .list-reset {
+				list-style-type: none;
+				margin-left: 0;
+			}
+
+			.reveal h1 {
+				font-size: 2.3em;
+			}
 		</style>
 	</head>
 
@@ -121,11 +130,14 @@
 						<h1>What are PWAs?</h1>
 
 						<p>
-							<q>
-								Progressive Web Applications take advantage of new technologies
-								to bring the best of mobile sites and native applications to users.
-								They're reliable, fast, and engaging.
-							</q>
+							<blockquote cite="https://developers.google.com/web/progressive-web-apps/">
+								<p>
+									Progressive Web Applications take advantage of new technologies
+									to bring the best of mobile sites and native applications to users.
+									They're reliable, fast, and engaging.
+								</p>
+								<footer>- Google</footer>
+							</blockquote>
 						</p>
 
 						<aside class="notes">
@@ -150,13 +162,11 @@
 					</section>
 
 					<section>
-						<h1>Simplified... kinda</h1>
+						<h1>In a nut shell</h1>
 
-						<ul>
-							<li>Performance</li>
-							<li>Integration</li>
-							<li>Resiliance</li>
-						</ul>
+						<div class="fragment">Performance</div>
+						<div class="fragment">Integration</div>
+						<div class="fragment">Resiliance</div>
 					</section>
 				</section>
 
@@ -174,73 +184,26 @@
 					</section>
 
 					<section>
-						<ul>
-							<li>Storing requests and response</li>
-							<li>Custom 404 pages – guardian.com has crossword</li>
-							<li>'Offline first' concept – load from cache first then load the content</li>
-							<li>Unlike cache it won’t remove after a period of time</li>
-							<li>Background Syncing</li>
-							<li>Streaming</li>
-						</ul>
-
-						<ul>
-							<li class="fragment">Extensible web manifest</li>
-							<li class="fragment">Offline network handling</li>
-							<li class="fragment">Fetch API</li>
-							<li class="fragment">Cache</li>
-							<li class="fragment">Background Sync</li>
-							<li class="fragment">Push</li>
-						</ul>
-					</section>
-
-					<section>
 						<h1>Lie-Fi</h1>
 					</section>
 
 					<section>
-						image of where service worker sits
+						<i>image of where service worker sits should be here but meh</i>
 					</section>
 
 					<section>
 						<h1>Adding SW</h1>
 
-						<code>
-							registerServiceWorker('/')...
-						</code>
+						<pre class="hljs lang-javascript"><code>navigator.serviceWorker.register('/worker.js',{
+     scope: '/'
+ }).then(registerSuccess, registerFailure);</code></pre>
 
-						<p>
-							Remember, the of the provided scope ('/') is not under the max scope allowed ('/js/').
-							Adjust the scope, move the SW script, or use Servive-Worker-Allowed HTTP header to allow the scope.
-						</p>
-					</section>
-
-					<section>
-						<h1>Inside the SW...</h1>
-
-						<ul>
-							<li><b>Features</b> we have available inside...</li>
-							<li>... and <b>only</b> inside SW...</li>
-							<li>... and <b>WHY?!</b></li>
-						</ul>
-
-						<code>
-							and some code of how we use them?
-						</code>
-					</section>
-
-					<section>
-						<h1>Resources</h1>
-
-						<ul>
-							<li>
-								<a target="_blank" href="https://jakearchibald-gcm.appspot.com/">
-									https://jakearchibald-gcm.appspot.com/
-								</a>
-							</li>
-							<li>
-								<a target="_blank" href="https://github.com/jakearchibald/indexeddb-promised">IndexedDB Promised</a>
-							</li>
-						</ul>
+						<aside class="notes">
+							<p>
+								Remember, the of the provided scope ('/') is not under the max scope allowed ('/js/').
+								Adjust the scope, move the SW script, or use Servive-Worker-Allowed HTTP header to allow the scope.
+							</p>
+						</aside>
 					</section>
 				</section>
 
@@ -254,31 +217,45 @@
 
 				<section>
 					<section>
-						<h1>Service Worker Life Cycle</h1>
+						<h1>SW Life Cycle</h1>
 					</section>
 
 					<section>
 						<ol>
 							<li>
-								Fetch and register SW via `serviceWorkerContainer.register()`
+								<b>Fetch</b> and register SW via <code>serviceWorkerContainer.register()</code>
 							</li>
-							<li>
-								If successful, the service worker is executed in a `ServiceWorkerGlobalScope`.
-								<aside class="notes">
-									This is basically a special kind of worker context, running off the main script execution thread, with no DOM access.
-								</aside>
+							<li class="fragment">
+								If successful, the service worker is executed in a <code>ServiceWorkerGlobalScope</code>.
 							</li>
-							<li>
-								The SW is now ready!
-								<aside class="notes">
-									... to process events
-								</aside>
+							<li class="fragment">
+								The SW is now <b>ready!</b>
 							</li>
-							<li>
+							<li class="fragment">
 								Installation of the worker is attempted when service worker-controlled pages are accessed subsequently.
+							</li>
+							<li class="fragment">
+								When the <code>oninstall</code> handler completes, the service worker is considered <b>installed</b>.
+							</li>
+							<li class="fragment">
+								<b>Activation</b>
+							</li>
+							<li class="fragment">
+								The Service Worker will now <b>control</b> pages.
+
+								<code>navigator.serviceWorker.controller</code>
+
 								<aside class="notes">
 									<p>
-										An Install event is always the first one sent to a service worker (this can be used to start the process of populating an IndexedDB, and caching site assets).
+										1. This is basically a special kind of worker context, running off the main script execution thread, with no DOM access.
+									</p>
+
+									<p>
+										2. ... to process events
+									</p>
+
+									<p>
+										3. An Install event is always the first one sent to a service worker (this can be used to start the process of populating an IndexedDB, and caching site assets).
 									</p>
 
 									<p>
@@ -296,47 +273,34 @@
 											If it fails, SW becomes redundant and will be garbage collected.
 										</p>
 									</p>
-								</aside>
-							</li>
-							<li>
-								When the `oninstall` handler completes, the service worker is considered <b>installed</b>.
-								<aside class="notes">
-									`event.waitUntil()` allows us to extend the installation stage until certain number of promises resolve.
-								</aside>
-							</li>
-							<li>
-								Activation.
-								<aside class="notes">
-									When the service worker is installed, it then receives an `activate` event. The primary use of `onactivate` is for cleanup of resources used in previous versions of a Service Worker script, like removing olde caches.
 
-									Also, migrate old data left over from previous versions of SW.
+									<p>
+										4. `event.waitUntil()` allows us to extend the installation stage until certain number of promises resolve.
+									</p>
 
-									HOW TO DO THAT?!?!!??!? How do you find the previous version of the worker???
-									There's this `navigator.serviceWorker.getRegistration(s?)()`
+									<p>
+										5. When the service worker is installed, it then receives an `activate` event. The primary use of `onactivate` is for cleanup of resources used in previous versions of a Service Worker script, like removing olde caches.
 
-									Activating stage can also be extended with `event.waitUntil()`
+										Also, migrate old data left over from previous versions of SW.
 
-									`self.clients.claim()` or `self.skipWaiting()` or `event.replace()` can be used to start controling all open clients without reloading them.
-									Remember this can cause issues with asset versions.
+										HOW TO DO THAT?!?!!??!? How do you find the previous version of the worker???
+										There's this `navigator.serviceWorker.getRegistration(s?)()`
+
+										Activating stage can also be extended with `event.waitUntil()`
+
+										`self.clients.claim()` or `self.skipWaiting()` or `event.replace()` can be used to start controling all open clients without reloading them.
+										Remember this can cause issues with asset versions.
+									</p>
 
 									<p>
 										The exception is if the worker calls `event.replace()` in the install event, then it takes control of all in-scope pages immediately.
 									</p>
-								</aside>
-							</li>
-							<li>
-								The Service Worker will now control pages.
 
-								<pre class="hljs lang-javascript">
-									<code>
-										navigator.serviceWorker.controller
-									</code>
-								</pre>
+									<p>
+										6. ...but only those opened after the `register()` is successful. i.e. a document starts life with or without a Service Worker and maintains that for its lifetime. So documents will have to be reloaded to actually be controlled.
 
-								<aside class="notes">
-									...but only those opened after the `register()` is successful. i.e. a document starts life with or without a Service Worker and maintains that for its lifetime. So documents will have to be reloaded to actually be controlled.
-
-									`navigator.serviceWorker.controller` points to the SW controlling the page. `null` otherwise.
+										`navigator.serviceWorker.controller` points to the SW controlling the page. `null` otherwise.
+									</p>
 								</aside>
 							</li>
 						</ol>
@@ -362,32 +326,63 @@
 						<h1>Updating</h1>
 
 						<p>
+							SW is considered updated if it's byte different.
+						</p>
+
+						<p class="fragment">
+							Newly installed SW is not activated till there are no more active pages controlled by the old SW.
+						</p>
+
+						<p class="fragment">
+							<code>self.clients.claim()</code> or <code>self.skipWaiting()</code> mentioned earlier can bypass that.
+						</p>
+
+						<aside class="notes">
 							Browser checks for updates in the SW script in the background. If it's byte different it's installed.
-						</p>
-
-						<p>
-							When updated service worker is requested, it is installed but not yet activated.
-							It waits till there are no more active pages controlled by the old SW and activates.
-
-							`self.clients.claim()` or `self.skipWaiting()` mentioned earlier.
-						</p>
+						</aside>
 					</section>
 
 					<section>
 						<h1>Cache and storage</h1>
 
 						<p>
-							In `activate` event, we can do anything that would have broken old SW when it was still in power.
-							Clearing old cache is a good example.
-							Also, migrating data, anything local that's leftover from previous versions.
+							In <code>activate</code> event, we can do anything that would have broken old SW when it was still in power, anything local that's leftover from previous versions.
 						</p>
 
 						<p>
+							e.g. Clearing old cache, migrating data.
+						</p>
+
+						<aside class="notes">
 							Also keep in mind that browsers allocate a finite amount of storage per origin.
 							Browser will do its best to keep data for origin but may delete it.
 							SW is a lower level API, with great power comes great responsibility.
 							We gotta clean up after ourselves.
+						</aside>
+					</section>
+
+					<section>
+						<h1>Events</h1>
+
+						<h2>// life cycle</h2>
+						<p>
+							install &middot; activate &middot; message
 						</p>
+
+						<h2>// actions</h2>
+						<p>
+							fetch &middot; sync &middot; push
+						</p>
+
+						<aside class="notes">
+							<h1>
+								Make it aparent that SW is just a different context that receives all these events and because of its context it has access to all those APIs
+							</h1>
+
+							<p>
+								(can we send custom events to SW???)
+							</p>
+						</aside>
 					</section>
 				</section>
 
@@ -403,36 +398,24 @@
 					<section>
 						<h1>Fetch!</h1>
 
-						<h2>New request API</h2>
+						<p><i>New request API</i></p>
 					</section>
 
 					<section>
-						<p>Previously achieved with `XMLHttpRequest`</p>
+						<p>
+							Previously achieved with <code>XMLHttpRequest</code>
+						</p>
+
 						<p>
 							A more straight-forward promise based way of making network requests.
 						</p>
 					</section>
 
-					<section>
-						<pre class="hljs lang-javascript">
-fetch(path).then(response => {});
-						</pre>
-						<aside class="notes">
-							`fetch(path)` takes a path to a resource and returns a `Promise` resolving to contiain `Response` object.
+					<!-- <section>
+						<h1>Before</h1>
 
-							This is a HTTP response. You're then responsible to do what you want with it.
-						</aside>
-					</section>
-
-					<section>
-						<h1>XMLHttpRequest vs fetch()</h1>
-
-						<div class="row">
-							<div class="col col-md-6">
-								<pre class="hljs lang-javascript">
-									<code>
-var xhr = new XMLHttpRequest();
-xhr.open('GET', url);
+						<pre class="hljs lang-javascript"><code>var xhr = new XMLHttpRequest();
+xhr.open('GET', path);
 xhr.responseType = 'json';
 
 xhr.onload = function() {
@@ -444,69 +427,67 @@ xhr.onerror = function() {
 };
 
 xhr.send();
-									</code>
-								</pre>
-							</div>
+</code></pre>
+					</section> -->
 
-							<div class="col col-md-6">
-								<pre class="hljs lang-javascript">
-									<code>
-fetch('flowers.jpg')
-.then(function(response) {
-  return response.blob();
-})
-.then(function(myBlob) {
-  var objectURL = URL.createObjectURL(myBlob);
-  myImage.src = objectURL;
-});
+					<section>
+						<code>
+							fetch(path).then(response => {});
+						</code>
 
-// or
+						<aside class="notes">
+							<code>fetch(path)</code> takes a path to a resource and returns a <code>Promise</code> resolving to contiain `Response` object.
 
-fetch(url).then(r => r.json())
-  .then(data => console.log(data))
-  .catch(e => console.log("Booo"))
-									</code>
-								</pre>
-							</div>
-						</div>
+							This is a HTTP response. You're then responsible to do what you want with it.
+						</aside>
 					</section>
 
 					<section>
-						<h1>`Request` and `Response`</h1>
+						<h2><code>Request</code> and <code>Response</code></h2>
 
 						<p>
 							New constructors related to fetch
 						</p>
 
-						<pre class="hljs lang-javascript"><code>
-							new Request(url);
-						</code></pre>
+						<p>
+							<code>new Request(url);</code>
+						</p>
 
-						<pre class="hljs lang-javascript"><code>
-							new Response(body, options)
-						</code></pre>
+						<p>
+							<code>new Response(body, options)</code>
+						</p>
 					</section>
-
 
 					<section>
 						<h1>Response</h1>
 
-						<div class="row">
-							<div class="col col-md-6">
-								Response.clone()
-								Response.error()
-								Response.redirect()
-							</div>
-							<div class="col col-md-6">
-								Response implements Body:
+						<table>
+							<tbody>
+								<tr>
+									<td style="vertical-align: top;">
+										<code>
+											<ul class="list-reset">
+												<li class="fragment">Response.clone()</li>
+												<li class="fragment">Response.error()</li>
+												<li class="fragment">Response.redirect()</li>
+											</ul>
+										</code>
+									</td>
 
-								Body.arrayBuffer()
-								Body.blob()
-								Body.formData()
-								Body.json()
-								Body.text()
-							</div>
-						</div>
+									<td style="vertical-align: top;">
+										<code>
+											<ul class="list-reset">
+												<li class="fragment">Body.arrayBuffer()</li>
+												<li class="fragment">Body.blob()</li>
+												<li class="fragment">Body.formData()</li>
+												<li class="fragment">Body.json()</li>
+												<li class="fragment">Body.text()</li>
+											</ul>
+										</code>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</section>
 
 
@@ -523,12 +504,18 @@ fetch(url).then(r => r.json())
 
 
 					<section>
-						<h1>CORS and opaque</h1>
-
-						<code>fetch(externalUrl, { mode: 'no-cors' })</code>
+						<h2>CORS and opaque</h2>
 
 						<p>
-							`response.type === 'opaque'`
+							<code>
+								fetch(externalUrl, { mode: 'no-cors' })
+							</code>
+						</p>
+
+						<p>
+							<code>
+								response.type === 'opaque'
+							</code>
 						</p>
 
 						<aside class="notes">
@@ -562,7 +549,7 @@ fetch(url).then(r => r.json())
 					<section>
 						<h1>Abort</h1>
 
-						<p>nope!</p>
+						<p><i>nope!</i></p>
 
 						<aside class="notes">
 							Fetch does not currently support aborting/canceling requests, which XHR does.
@@ -581,6 +568,8 @@ fetch(url).then(r => r.json())
 				<section>
 					<section>
 						<h1>Cache!</h1>
+
+						<p><i>async origin request/response storage</i></p>
 					</section>
 
 					<section>
@@ -593,7 +582,7 @@ fetch(url).then(r => r.json())
 						<h1>New</h1>
 
 						<p>
-							Cache is a store of `Response`s keyed against `Request`s.
+							A store of <code>Response</code>es keyed against <code>Request</code>s.
 						</p>
 
 						<aside class="notes">
@@ -604,29 +593,37 @@ fetch(url).then(r => r.json())
 					<section>
 						<h1>How to</h1>
 
-						<p>
-							Actually explain how to use it.
-						</p>
-
-						<h1><b>Make it aparent that SW is just a different context that receives all these events and because of its context it has access to all those APIs</b></h1>
-						<p>(can we send custom events to SW???)</p>
-
-						<h2>pull out a few other events which are relevant to the Cache API</h2>
-
-						<code>
-							...
-							'install', 'activate', 'message'
-							...
-							'fetch', 'sync', 'push'
-							...
-						</code>
+						<pre class="hljs lang-javascript"><code>caches.open(CURRENT_VERSION_CACHE_KEY).then(cache => {
+	return cache.addAll([
+		'/js/app.js'
+		'/css/app.css',
+		'/images/icon.png',
+		'/images/loader.svg',
+		'/views/loader.html',
+		'/views/offline.html',
+ 	]);
+});</code></pre>
 					</section>
 
 					<section>
+						<h1>How to</h1>
+
+						<pre class="hljs lang-javascript"><code>this.addEventListener('fetch', event => {
+	// cached
+	event.respondWith(caches.match(event.request));
+
+	// not cached
+	event.respondWith(fetch(event.request));
+});
+
+</code></pre>
+					</section>
+
+					<!-- <section>
 						<h1>How to refresh assets in cache programatically?</h1>
-					</section>
+					</section> -->
 
-					<section>
+					<!-- <section>
 						<h1>Caching and versioning assets</h1>
 
 						<p>
@@ -650,7 +647,7 @@ fetch(url).then(r => r.json())
 						<aside class="notes">
 							Client has 1.0.0 cached, it then receives 1.1.0, server doesn't need to have 1.0.0 because it hopefully no longer uses it and Client will get rid of it when it does no longer need it.
 						</aside>
-					</section>
+					</section> -->
 				</section>
 
 
@@ -665,7 +662,7 @@ fetch(url).then(r => r.json())
 					<section>
 						<h1>Push!</h1>
 
-						<p>Push messaging, send message from server to client.</p>
+						<p><i>Push messaging, send message from server to client</i></p>
 					</section>
 
 					<section>
@@ -787,6 +784,8 @@ function showNotification() {
 				<section>
 					<section>
 						<h1>Sync!</h1>
+
+						<p>Deferring tasks until user has connectivity</p>
 
 						<aside class="notes">
 							https://developers.google.com/web/updates/2015/12/background-sync?hl=en
@@ -988,6 +987,22 @@ self.addEventListener('sync', function(event) {
 				<!-- ******************************************************************************************************* -->
 				<!-- ******************************************************************************************************* -->
 				<!-- ******************************************************************************************************* -->
+
+
+				<section>
+					<h1>Quick recap</h1>
+
+					<ul>
+						<li class="fragment">Online network handling</li>
+						<li class="fragment">Offline network handling</li>
+						<li class="fragment">Fetch</li>
+						<li class="fragment">Cache</li>
+						<li class="fragment">Background Sync</li>
+						<li class="fragment">Push</li>
+						<li class="fragment">Extensible web manifest</li>
+						<li class="fragment">Device integration</li>
+					</ul>
+				</section>
 
 
 				<section>
