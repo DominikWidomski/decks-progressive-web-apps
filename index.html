@@ -100,19 +100,15 @@
 					<section>
 						<h1>Appiness!</h1>
 
-						<ul>
-							<li>Responsive</li>
-							<li>Offline
-								<ul>
-									<li>Persistant</li>
-									<li>Network Resiliant</li>
-									<li>... Manages sync, user doesn't have to wait for network (relates to prev. pt.)</li>
-								</ul>
-							</li>
-							<li>Render what you have, most achievable content, progressively enhance content</li>
-							<li>Notifications, integration with mobile</li>
-							<li>Appy Behaviour</li>
-							<li>Animated, Juicy, Responsive (Material)</li>
+						<ul class="list-reset">
+							<li class="fragment">Responsive</li>
+							<li class="fragment">Persistant</li>
+							<li class="fragment">Network Resiliant</li>
+							<li class="fragment">Data is ready for user</li>
+							<li class="fragment">Render what you have</li>
+							<li class="fragment">Notifications, integration with mobile</li>
+							<li class="fragment">Animated</li>
+							<li class="fragment">Responsive</li>
 						</ul>
 					</section>
 				</section>
@@ -149,20 +145,18 @@
 					</section>
 
 					<section>
-						<h1>What makes up PWA</h1>
+						<h1>What PWAs provide</h1>
 
-						<ul>
-							<li class="fragment">Instant Loading</li> <!-- Performance -->
-							<li class="fragment">Add to Homescreen</li> <!-- Integration -->
-							<li class="fragment">Push Notifications</li> <!-- Integration -->
-							<li class="fragment">Fast</li> <!-- Performance -->
-							<li class="fragment">Secure</li>
-							<li class="fragment">Responsive</li>
-						</ul>
+						<p class="fragment">Instant Loading</p> <!-- Performance -->
+						<p class="fragment">Add to Homescreen</p> <!-- Integration -->
+						<p class="fragment">Push Messaging / Notifications</p> <!-- Integration -->
+						<p class="fragment">Fast</p> <!-- Performance -->
+						<p class="fragment">Secure</p>
+						<p class="fragment">Responsive</p>
 					</section>
 
 					<section>
-						<h1>In a nut shell</h1>
+						<h1>or in a nut shell...</h1>
 
 						<div class="fragment">Performance</div>
 						<div class="fragment">Integration</div>
@@ -334,7 +328,7 @@
 						</p>
 
 						<p class="fragment">
-							<code>self.clients.claim()</code> or <code>self.skipWaiting()</code> mentioned earlier can bypass that.
+							<code>self.clients.claim()</code> or <code>self.skipWaiting()</code> can bypass that.
 						</p>
 
 						<aside class="notes">
@@ -593,6 +587,8 @@ xhr.send();
 					<section>
 						<h1>How to</h1>
 
+						<p><i>install default cache</i></p>
+
 						<pre class="hljs lang-javascript"><code>caches.open(CURRENT_VERSION_CACHE_KEY).then(cache => {
 	return cache.addAll([
 		'/js/app.js'
@@ -608,16 +604,33 @@ xhr.send();
 					<section>
 						<h1>How to</h1>
 
-						<pre class="hljs lang-javascript"><code>this.addEventListener('fetch', event => {
-	// cached
-	event.respondWith(caches.match(event.request));
+						<p><i>respond to fetch</i></p>
 
-	// not cached
-	event.respondWith(fetch(event.request));
+						<pre>
+							<code class="hljs lang-javascript" data-trim>
+this.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request).then(response => {
+      if(response) {
+        console.info("Found in cache!");
+        return response;
+      }
+
+      console.warn("Not found in cache.");
+
+      return fetch(event.request).then(response => {
+        caches.open(CURRENT_VERSION_CACHE_KEY).then(cache => {
+          cache.put(event.request, response);
+        });
+
+        return response.clone();
+      });
+    })
+  );
 });
-
-</code></pre>
-					</section>
+						</code>
+					</pre>
+  				</section>
 
 					<!-- <section>
 						<h1>How to refresh assets in cache programatically?</h1>
@@ -684,14 +697,38 @@ xhr.send();
 						</p>
 					</section>
 
-					<section>
+					<!-- <section>
 						Registering, expiring, refreshing, multiple devices
+					</section> -->
+
+					<section>
+						<h1>Manifest</h1>
+
+						<pre class="hljs lang-javascript"><code>{
+	"gcm_sender_id": "111222333444",
+	...
+}
+</code></pre>
 					</section>
 
 					<section>
-						<code>
-							https://android.googleapis.com/gcm/send/<b>dxcNlXkngUc:APA91bHtGp8RzObJweu1wcyBVP5bqa8qzLoms5rJ_iO09u22zTkIEhhQ68SN4iFm8JtPzyJkn2AE1CL_JT_QmcPtiDzZielDYLzG_jwRAp6zwRHnoTA5cHtqrFNR-YPXUnwXeywaK8LG</b>
-						</code>
+						<h1>Register Client</h1>
+
+						<pre class="hljs lang-javascript"><code>registration.pushManager.subscribe({
+		userVisibleOnly: true
+	}).then(function(pushSubscription) {
+		// Send endpoint to your server
+		console.info(pushSubscription.endpoint);
+	}, function(error) {
+		console.error(error);
+	}
+);</code></pre>
+					</section>
+
+					<section>
+						<h1>Endpoint</h1>
+
+						<pre><code>https://android.googleapis.com/gcm/send/{{USER_REGISTRATION_ID}}</code></pre>
 					</section>
 
 					<section>
@@ -712,11 +749,21 @@ https://android.googleapis.com/gcm/send -d
 					</section>
 
 					<section>
-						https://developers.google.com/web/updates/2015/03/push-notifications-on-the-open-web
-						https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification
+						<h1>Receiving in SW</h1>
+
+						<pre>
+							<code class="hljs lang-bash" data-trim contenteditable>
+								self.addEventListener('push', event => {});
+							</code>
+						</pre>
 					</section>
 
-					<section>
+					<!-- <section>
+						https://developers.google.com/web/updates/2015/03/push-notifications-on-the-open-web
+						https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification
+					</section> -->
+
+					<!-- <section>
 						<h1>In and Out</h1>
 						<h2>... of the SW</h2>
 
@@ -770,7 +817,7 @@ function showNotification() {
 						<aside class="notes">
 							https://developer.mozilla.org/en/docs/Web/API/notification
 						</aside>
-					</section>
+					</section> -->
 				</section>
 
 
@@ -785,7 +832,7 @@ function showNotification() {
 					<section>
 						<h1>Sync!</h1>
 
-						<p>Deferring tasks until user has connectivity</p>
+						<p><i>Deferring tasks until user has connectivity</i></p>
 
 						<aside class="notes">
 							https://developers.google.com/web/updates/2015/12/background-sync?hl=en
@@ -803,12 +850,11 @@ function showNotification() {
 					</section>
 
 					<section>
-						<h1>Register for sync</h1>
+						<h1>Register sync</h1>
 
-						<pre class="hljs lang-javascript">
-							<code>
-// Then later, request a one-off sync:
-navigator.serviceWorker.ready.then(function(swRegistration) {
+						<pre>
+							<code class="hljs lang-javascript" data-trim>
+navigator.serviceWorker.ready.then(swRegistration => {
   return swRegistration.sync.register('mySyncTag');
 });
 							</code>
@@ -816,11 +862,11 @@ navigator.serviceWorker.ready.then(function(swRegistration) {
 					</section>
 
 					<section>
-						<h1>Respond to sync</h1>
+						<h1>Respond to <code>sync</code> event</h1>
 
-						<pre class="hljs lang-javascript">
-							<code>
-self.addEventListener('sync', function(event) {
+						<pre>
+							<code class="hljs lang-javascript" data-trim>
+self.addEventListener('sync', event => {
   if (event.tag == 'mySyncTag') {
     event.waitUntil(doSomeStuff());
   }
@@ -829,7 +875,7 @@ self.addEventListener('sync', function(event) {
 						</pre>
 					</section>
 
-					<section>
+					<!-- <section>
 						<h1>ExtendableEvent.waitUntil()</h1>
 
 						<p>
@@ -847,13 +893,16 @@ self.addEventListener('sync', function(event) {
 						<p>
 							Blocks other events.
 						</p>
-					</section>
+					</section> -->
 
 					<section>
 						<h1>Tags</h1>
 
 						<p>
-							Sync are registered with a tag ('mySyncTag').
+							Sync are registered with a tag <i>('mySyncTag)</i>.
+						</p>
+
+						<p>
 							Registering to the same tag will coalesce the with existing sync.
 							Which means it will only fire <b>ONCE</b>.
 						</p>
@@ -900,13 +949,13 @@ self.addEventListener('sync', function(event) {
 				<!-- ******************************************************************************************************* -->
 
 
-				<section data-background="#A53F2B">
+				<section>
 					<section>
 						<h1>Homescreen!</h1>
 					</section>
 
 					<section>
-						<ul>
+						<ul class="list-reset">
 							<li class="fragment">Icon on homescreen</li>
 							<li class="fragment">Splash Screen</li>
 							<li class="fragment">Integrated with device</li>
@@ -933,17 +982,30 @@ self.addEventListener('sync', function(event) {
 					<section>
 						<h1>Manifest</h1>
 
-						<code>
-							...
-							snippets of code from the manifest that are relevant to the homescreen
-							...
-							icons!
-							...
-							splash screen
-							...
-							how it presents itself? standalone etc?
-							...
-						</code>
+						<pre>
+							<code class="hljs lang-json" data-trim>
+{
+  "name": "Progressive App",
+  "short_name": "Demo App",
+  "icons": [
+    {
+      "src": "/images/icon.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "density": 3.0
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "gcm_sender_id": "111222333444",
+  "permissions": [
+    "gcm",
+    "desktop-notification"
+  ]
+}
+							</code>
+						</pre>
 
 						<aside class="notes">
 							<p>
@@ -974,10 +1036,12 @@ self.addEventListener('sync', function(event) {
 				<section>
 					<section>
 						<h1>When?</h1>
-					</section>
 
-					<section>
-						https://jakearchibald.github.io/isserviceworkerready/
+						<p>
+							<a href="https://jakearchibald.github.io/isserviceworkerready/">
+								https://jakearchibald.github.io/isserviceworkerready/
+							</a>
+						</p>
 					</section>
 				</section>
 
@@ -992,16 +1056,14 @@ self.addEventListener('sync', function(event) {
 				<section>
 					<h1>Quick recap</h1>
 
-					<ul>
-						<li class="fragment">Online network handling</li>
-						<li class="fragment">Offline network handling</li>
-						<li class="fragment">Fetch</li>
-						<li class="fragment">Cache</li>
-						<li class="fragment">Background Sync</li>
-						<li class="fragment">Push</li>
-						<li class="fragment">Extensible web manifest</li>
-						<li class="fragment">Device integration</li>
-					</ul>
+						<p class="fragment">Online network handling</p>
+						<p class="fragment">Offline network handling</p>
+						<p class="fragment">Fetch</p>
+						<p class="fragment">Cache</p>
+						<p class="fragment">Background Sync</p>
+						<p class="fragment">Push</p>
+						<p class="fragment">Extensible web manifest</p>
+						<p class="fragment">Device integration</p>
 				</section>
 
 
@@ -1025,7 +1087,7 @@ self.addEventListener('sync', function(event) {
 				<section>
 					<h1><em>Fin.</em></h1>
 
-					<p>Questions?</p>
+					<p><i>Questions?</i></p>
 				</section>
 
 
