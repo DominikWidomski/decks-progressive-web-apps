@@ -148,7 +148,7 @@
 						<h1>What PWAs provide</h1>
 
 						<p class="fragment">Instant Loading</p> <!-- Performance -->
-						<p class="fragment">Add to Homescreen</p> <!-- Integration -->
+						<p class="fragment">Homescreen Icon</p> <!-- Integration -->
 						<p class="fragment">Push Messaging / Notifications</p> <!-- Integration -->
 						<p class="fragment">Fast</p> <!-- Performance -->
 						<p class="fragment">Secure</p>
@@ -177,9 +177,9 @@
 						<h1>Service Workers!</h1>
 					</section>
 
-					<section>
+					<!-- <section>
 						<h1>Lie-Fi</h1>
-					</section>
+					</section> -->
 
 					<section>
 						<i>image of where service worker sits should be here but meh</i>
@@ -188,9 +188,13 @@
 					<section>
 						<h1>Adding SW</h1>
 
-						<pre class="hljs lang-javascript"><code>navigator.serviceWorker.register('/worker.js',{
-     scope: '/'
- }).then(registerSuccess, registerFailure);</code></pre>
+						<pre>
+							<code class="hljs lang-javascript" data-trim contenteditable>
+navigator.serviceWorker.register('/worker.js',{
+	scope: '/'
+}).then(success, failure);
+ 							</code>
+ 						</pre>
 
 						<aside class="notes">
 							<p>
@@ -217,7 +221,7 @@
 					<section>
 						<ol>
 							<li>
-								<b>Fetch</b> and register SW via <code>serviceWorkerContainer.register()</code>
+								<b>Fetch</b> and register SW via <code>navigation.serviceWorker.register()</code>
 							</li>
 							<li class="fragment">
 								If successful, the service worker is executed in a <code>ServiceWorkerGlobalScope</code>.
@@ -257,15 +261,15 @@
 									</p>
 
 									<p>
-										What is `install` fails? What if not all promisses resolve, things aren't cached? Or will they still resolve to failed and install will eventually complete?
+										<b>Q:</b> What is `install` fails? What if not all promisses resolve, things aren't cached? Or will they still resolve to failed and install will eventually complete?
+									</p>
 
-										<q>
-											"If the promise is rejected, the install fails, and the worker won’t do anything. This is ok, as you can fix your code and then try again the next time registration occurs."
-										</q>
+									<p>
+										<b>A:</b> "If the promise is rejected, the install fails, and the worker won’t do anything. This is ok, as you can fix your code and then try again the next time registration occurs."
+									</p>
 
-										<p>
-											If it fails, SW becomes redundant and will be garbage collected.
-										</p>
+									<p>
+										If it fails, SW becomes redundant and will be garbage collected.
 									</p>
 
 									<p>
@@ -273,7 +277,7 @@
 									</p>
 
 									<p>
-										5. When the service worker is installed, it then receives an `activate` event. The primary use of `onactivate` is for cleanup of resources used in previous versions of a Service Worker script, like removing olde caches.
+										5. After the service worker is installed, it then receives an `activate` event. The primary use of `onactivate` is for cleanup of resources used in previous versions of a Service Worker script, like removing olde caches.
 
 										Also, migrate old data left over from previous versions of SW.
 
@@ -328,11 +332,17 @@
 						</p>
 
 						<p class="fragment">
-							<code>self.clients.claim()</code> or <code>self.skipWaiting()</code> can bypass that.
+							<code>self.skipWaiting()</code> can bypass that.
 						</p>
 
 						<aside class="notes">
-							Browser checks for updates in the SW script in the background. If it's byte different it's installed.
+							<p>
+								Browser checks for updates in the SW script in the background. If it's byte different it's installed.
+							</p>
+
+							<p>
+								<code>self.clients.claim()</code> or <code>self.skipWaiting()</code> or <code>event.replace()</code>
+							</p>
 						</aside>
 					</section>
 
@@ -444,11 +454,11 @@ xhr.send();
 						</p>
 
 						<p>
-							<code>new Request(url);</code>
+							<code class="hljs lang-javascript">new Request(url);</code>
 						</p>
 
 						<p>
-							<code>new Response(body, options)</code>
+							<code class="hljs lang-javascript">new Response(body, options)</code>
 						</p>
 					</section>
 
@@ -693,7 +703,7 @@ this.addEventListener('fetch', event => {
 						<h1>Google Cloud Platform</h1>
 
 						<p>
-							Register for GCP to setup Google Cloud Messaging and be able to push messages directly to Chrome!
+							Register for GCP to setup Google Cloud Messaging API and be able to push messages directly to Chrome!
 						</p>
 					</section>
 
@@ -714,7 +724,9 @@ this.addEventListener('fetch', event => {
 					<section>
 						<h1>Register Client</h1>
 
-						<pre class="hljs lang-javascript"><code>registration.pushManager.subscribe({
+						<pre>
+							<code class="hljs lang-javascript" data-trim>
+registration.pushManager.subscribe({
 		userVisibleOnly: true
 	}).then(function(pushSubscription) {
 		// Send endpoint to your server
@@ -722,7 +734,14 @@ this.addEventListener('fetch', event => {
 	}, function(error) {
 		console.error(error);
 	}
-);</code></pre>
+);
+							</code>
+						</pre>
+
+						<aside class="notes">
+							<b><code>userVisibleOnly</code></b>: A boolean indicating that the returned push subscription will only be used for messages whose effect is made visible to the user.
+						</aside>
+
 					</section>
 
 					<section>
@@ -732,7 +751,7 @@ this.addEventListener('fetch', event => {
 					</section>
 
 					<section>
-						<h1>Send notification / PUSH MESSAGE</h1>
+						<h1>Send message</h1>
 
 						<pre>
 							<!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
@@ -749,13 +768,19 @@ https://android.googleapis.com/gcm/send -d
 					</section>
 
 					<section>
-						<h1>Receiving in SW</h1>
+						<h1>Receive</h1>
 
 						<pre>
 							<code class="hljs lang-bash" data-trim contenteditable>
 								self.addEventListener('push', event => {});
 							</code>
 						</pre>
+
+						<aside class="notes">
+							<p>
+								<b>event.target:</b> <code>ServiceWorkerGlobalScope</code>
+							</p>
+						</aside>
 					</section>
 
 					<!-- <section>
@@ -845,7 +870,7 @@ function showNotification() {
 						</p>
 
 						<p>
-							Registering sync when you're online fires the event immediately.
+							Registering sync while online fires the event immediately.
 						</p>
 					</section>
 
@@ -867,7 +892,7 @@ navigator.serviceWorker.ready.then(swRegistration => {
 						<pre>
 							<code class="hljs lang-javascript" data-trim>
 self.addEventListener('sync', event => {
-  if (event.tag == 'mySyncTag') {
+  if (event.tag === 'mySyncTag') {
     event.waitUntil(doSomeStuff());
   }
 });
@@ -1014,7 +1039,7 @@ self.addEventListener('sync', event => {
 						</aside>
 					</section>
 
-					<section>
+					<!-- <section>
 						<h1>theme-color</h1>
 
 						<code>&lt;meta name=&quot;theme-color&quot; content=&quot;#e92c6c&quot;&gt;</code>
@@ -1022,7 +1047,7 @@ self.addEventListener('sync', event => {
 						<aside class="notes">
 							https://developers.google.com/web/updates/2014/11/Support-for-theme-color-in-Chrome-39-for-Android?hl=en
 						</aside>
-					</section>
+					</section> -->
 				</section>
 
 
@@ -1038,7 +1063,7 @@ self.addEventListener('sync', event => {
 						<h1>When?</h1>
 
 						<p>
-							<a href="https://jakearchibald.github.io/isserviceworkerready/">
+							<a href="https://jakearchibald.github.io/isserviceworkerready/" target="_blank">
 								https://jakearchibald.github.io/isserviceworkerready/
 							</a>
 						</p>
