@@ -307,6 +307,10 @@ navigator.serviceWorker.register('/worker.js',{
 
 										`navigator.serviceWorker.controller` points to the SW controlling the page. `null` otherwise.
 									</p>
+
+									<p>
+										SW only starts controlling the pages when they're loaded.
+									</p>
 								</aside>
 							</li>
 						</ol>
@@ -350,6 +354,14 @@ navigator.serviceWorker.register('/worker.js',{
 
 							<p>
 								<code>self.clients.claim()</code> or <code>self.skipWaiting()</code> or <code>event.replace()</code>
+							</p>
+
+							<p>
+								When refreshing pages, a new browser window is spawned before the old one closes. For an old service worker to phase out, it must stop being controlled by any pages. But because the old browser window is only deleted after the new one is spawned, the SW continues controlling a page during that time. The page should be completely closed or navigated somewhere away from the scope of the SW for it to stop controling it and therefore phase out, allowing the new one to take over.
+							</p>
+
+							<p>
+								It's a good idea to have very short cache on SW scripts. Browser will cap cache duration for SW scripts to 24h.
 							</p>
 						</aside>
 					</section>
