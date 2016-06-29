@@ -191,8 +191,8 @@
 						<pre>
 							<code class="hljs lang-javascript" data-trim contenteditable>
 navigator.serviceWorker.register('/worker.js',{
-	scope: '/'
-}).then(success, failure);
+	scope: '/'	// optional
+}).then(successCallback, failureCallback);
  							</code>
  						</pre>
 
@@ -200,6 +200,14 @@ navigator.serviceWorker.register('/worker.js',{
 							<p>
 								Remember, the of the provided scope ('/') is not under the max scope allowed ('/js/').
 								Adjust the scope, move the SW script, or use Servive-Worker-Allowed HTTP header to allow the scope.
+							</p>
+
+							<p>
+								Scope is not required to be passed. The default scope is the location of the script.
+							</p>
+
+							<p>
+								Any page URL beginning with the scope will be controlled by the SW. Anything deeper than it, but nothing shallower. <b>NOTE: if scope has trailing slash, URL without trailing slash is considered shallower, therefore will not be controlled.</b>
 							</p>
 						</aside>
 					</section>
